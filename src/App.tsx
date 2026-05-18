@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { 
   Pizza, 
   ChefHat, 
@@ -18,7 +18,9 @@ import {
   Search,
   Utensils,
   Leaf,
-  Wine
+  Wine,
+  Menu,
+  X
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -176,7 +178,7 @@ const LandingView = ({ setActiveTab, setActiveCategory, setMenuMode, activeCateg
     <section className="relative min-h-[85vh] flex items-center pt-20 overflow-hidden">
       <div className="absolute inset-0 z-0 scale-105">
         <img 
-          src={`${import.meta.env.BASE_URL}images/pizzakep.png`} 
+          src="/images/pizzakep.png" 
           alt="Authentic wood-fired pizza" 
           className="w-full h-full object-cover brightness-[0.7] contrast-[1.1]"
         />
@@ -515,10 +517,14 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState("pizza");
   const [activeTab, setActiveTab] = useState("Kezdőlap");
   const [menuMode, setMenuMode] = useState<"full" | "category">("full");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setIsMobileMenuOpen(false);
   }, [activeTab, activeCategory]);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-primary selection:text-white overflow-x-hidden">
@@ -541,12 +547,53 @@ export default function App() {
           <div className="flex items-center gap-4">
             <button 
               onClick={() => window.location.href = "tel:+36307556846"}
-              className="hidden sm:block px-6 py-3 bg-primary text-white font-mono font-bold uppercase tracking-widest rounded-full solid-shadow transition-all hover:-translate-y-1 active:translate-y-0 shadow-lg"
+              className="hidden lg:block px-6 py-3 bg-primary text-white font-mono font-bold uppercase tracking-widest rounded-full solid-shadow transition-all hover:-translate-y-1 active:translate-y-0 shadow-lg"
             >
               Rendelés Most
             </button>
+            
+            <button 
+              onClick={toggleMobileMenu}
+              className="md:hidden p-2 text-primary"
+              aria-label="Toggle Menu"
+            >
+              {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+            </button>
           </div>
         </div>
+
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-surface border-b border-surface-dim overflow-hidden shadow-2xl"
+            >
+              <div className="flex flex-col p-6 gap-6">
+                {["Kezdőlap", "Étlap", "Rólunk", "Kapcsolat"].map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => {
+                      setActiveTab(item);
+                      if (item === "Étlap") setMenuMode("full");
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`font-mono text-xl font-black uppercase tracking-widest text-left p-2 transition-colors ${activeTab === item ? "text-primary italic translate-x-2" : "text-on-surface-variant"}`}
+                  >
+                    {item}
+                  </button>
+                ))}
+                <button 
+                  onClick={() => window.location.href = "tel:+36307556846"}
+                  className="mt-4 px-8 py-5 bg-primary text-white font-mono font-bold uppercase tracking-[0.2em] rounded-2xl solid-shadow text-center"
+                >
+                  Rendelés Most
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       <main className="flex-grow">
