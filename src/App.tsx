@@ -257,69 +257,7 @@ const LandingView = ({ setActiveTab, setActiveCategory, setMenuMode, activeCateg
       </div>
     </section>
 
-    <section className="pt-8 pb-16 md:py-32 px-4 bg-surface-container relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-10 bg-surface torn-edge-bottom z-10"></div>
-      <div className="absolute bottom-0 left-0 w-full h-10 bg-surface torn-edge-top z-10"></div>
-      <div className="max-w-7xl mx-auto relative z-20">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter">Népszerű Pizzáink</h2>
-            <p className="text-on-surface-variant font-medium text-lg">Vendégeink kedvenc választásai a héten</p>
-          </div>
-          <button 
-            onClick={() => {
-              setMenuMode("full");
-              setActiveTab("Étlap");
-            }}
-            className="flex items-center gap-3 text-primary font-mono font-bold uppercase tracking-widest group bg-white px-8 py-4 rounded-full shadow-sm hover:shadow-xl transition-all"
-          >
-            Összes megtekintése <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-          </button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {POPULAR_ITEMS.map((item) => (
-            <motion.div key={item.id} whileHover={{ y: -15 }} className="bg-surface rounded-[32px] overflow-hidden solid-shadow transition-all group">
-              <div className="relative h-72 overflow-hidden">
-                <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute top-6 right-6 bg-red-600 text-white font-mono font-bold px-6 py-3 rounded-2xl solid-shadow text-xl">
-                  {item.price}
-                </div>
-              </div>
-              <div className="p-10">
-                <h4 className="text-3xl font-black mb-4 tracking-tight">{item.name}</h4>
-                <p className="text-on-surface-variant text-sm mb-10 leading-relaxed font-medium">{item.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section className="py-20 px-4 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-black mb-4">Mit mondanak rólunk?</h2>
-          <p className="text-on-surface-variant">Több mint 5000 elégedett vendég havonta</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((t) => (
-            <motion.div key={t.id} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="p-10 rounded-3xl border-2 border-dashed border-surface-dim bg-surface-container relative">
-              <div className="absolute -top-6 -left-2 text-6xl text-primary opacity-20 font-display font-black">"</div>
-              <p className="italic text-lg mb-8 text-on-surface/80 leading-relaxed font-medium">{t.text}</p>
-              <div className="flex items-center gap-4">
-                <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full border-2 border-primary" />
-                <div>
-                  <h5 className="font-bold text-sm uppercase tracking-widest">{t.name}</h5>
-                  <div className="flex text-secondary">
-                    {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-current" />)}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <AboutView />
   </>
 );
 
@@ -468,7 +406,7 @@ const AboutView = () => (
       <div className="relative">
         <div className="absolute -top-10 -left-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl"></div>
         <motion.div initial={{ scale: 0.9, rotate: -2 }} animate={{ scale: 1, rotate: 0 }} className="rounded-[40px] overflow-hidden solid-shadow-dark">
-          <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=1200" alt="Cooking" className="w-full h-[600px] object-cover" />
+          <img src={`${import.meta.env.BASE_URL}images/rolunk.jpeg`} alt="Cooking" className="w-full h-[600px] object-cover" />
         </motion.div>
         <div className="absolute -bottom-8 -right-8 bg-primary text-white p-8 rounded-[32px] solid-shadow max-w-[280px]">
           <p className="font-display font-black text-2xl leading-tight italic">
