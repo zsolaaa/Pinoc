@@ -4,6 +4,7 @@
  */
 
 import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect } from "react";
 import { 
   Pizza, 
   ChefHat, 
@@ -20,9 +21,101 @@ import {
   Leaf,
   Wine,
   Menu,
-  X
+  X,
+  Mail,
+  Send
 } from "lucide-react";
-import { useState, useEffect } from "react";
+
+// Contact View Component
+const ContactView = () => (
+  <motion.div 
+    initial={{ opacity: 0 }} 
+    animate={{ opacity: 1 }} 
+    className="max-w-7xl mx-auto px-4 py-20 relative z-10"
+  >
+    <div className="text-center mb-20">
+      <h2 className="text-6xl md:text-8xl font-black mb-4 tracking-tighter italic tilted inline-block">Kapcsolat</h2>
+      <div className="h-2 bg-primary w-40 mx-auto rounded-full opacity-20"></div>
+    </div>
+
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-20 items-start">
+      <div className="space-y-12">
+        <div className="flex gap-8 group">
+          <div className="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+            <MapPin className="w-8 h-8" />
+          </div>
+          <div>
+            <h4 className="font-mono font-black uppercase tracking-widest text-sm mb-2 opacity-50">Címünk</h4>
+            <p className="text-2xl font-bold leading-tight">6500 Baja,<br/>Tóth Kálmán tér 5.</p>
+          </div>
+        </div>
+
+        <div className="flex gap-8 group">
+          <div className="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+            <Phone className="w-8 h-8" />
+          </div>
+          <div>
+            <h4 className="font-mono font-black uppercase tracking-widest text-sm mb-2 opacity-50">Telefonszám</h4>
+            <p className="text-2xl font-bold leading-tight">+36 30 755 6846</p>
+          </div>
+        </div>
+
+        <div className="flex gap-8 group">
+          <div className="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+            <Mail className="w-8 h-8" />
+          </div>
+          <div>
+            <h4 className="font-mono font-black uppercase tracking-widest text-sm mb-2 opacity-50">E-mail</h4>
+            <p className="text-2xl font-bold leading-tight">info@pinocchiopizza.hu</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white p-10 md:p-16 rounded-[48px] solid-shadow-dark relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+        
+        <form className="space-y-8 relative z-10" onSubmit={(e) => e.preventDefault()}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-2">
+              <label className="font-mono font-bold uppercase tracking-widest text-[10px] opacity-60 ml-2">Vezetéknév</label>
+              <input type="text" className="w-full bg-surface-container border-2 border-surface-dim rounded-2xl px-6 py-4 focus:border-primary outline-none transition-colors font-medium" />
+            </div>
+            <div className="space-y-2">
+              <label className="font-mono font-bold uppercase tracking-widest text-[10px] opacity-60 ml-2">Keresztnév</label>
+              <input type="text" className="w-full bg-surface-container border-2 border-surface-dim rounded-2xl px-6 py-4 focus:border-primary outline-none transition-colors font-medium" />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="font-mono font-bold uppercase tracking-widest text-[10px] opacity-60 ml-2">Email *</label>
+            <input type="email" required className="w-full bg-surface-container border-2 border-surface-dim rounded-2xl px-6 py-4 focus:border-primary outline-none transition-colors font-medium" />
+          </div>
+
+          <div className="space-y-2">
+            <label className="font-mono font-bold uppercase tracking-widest text-[10px] opacity-60 ml-2">Üzenet</label>
+            <textarea rows={4} className="w-full bg-surface-container border-2 border-surface-dim rounded-3xl px-6 py-4 focus:border-primary outline-none transition-colors font-medium resize-none"></textarea>
+          </div>
+
+          <button className="w-full py-6 bg-on-surface text-surface font-mono font-bold uppercase tracking-[0.3em] rounded-2xl solid-shadow-dark hover:-translate-y-1 transition-all flex items-center justify-center gap-4">
+            Küldés <Send className="w-5 h-5" />
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div className="w-full h-[500px] rounded-[48px] overflow-hidden solid-shadow-dark border-4 border-white">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2757.2504265737527!2d18.951555176882203!3d46.18555557110185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4742f1bcb1000001%3A0xc319223e745679ac!2sPinocchio%20Pizzeria!5e0!3m2!1shu!2shu!4v1716020000000!5m2!1shu!2shu" 
+        width="100%" 
+        height="100%" 
+        style={{ border: 0 }} 
+        allowFullScreen 
+        loading="lazy" 
+        referrerPolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </motion.div>
+);
 
 const CATEGORIES = [
   { id: "pizza", name: "Pizza", icon: Pizza },
@@ -535,7 +628,15 @@ export default function App() {
       </nav>
 
       <main className="flex-grow">
-        {activeTab === "Rólunk" ? <AboutView /> : activeTab === "Étlap" ? <MenuView menuMode={menuMode} activeCategory={activeCategory} setMenuMode={setMenuMode} /> : <LandingView setActiveTab={setActiveTab} setActiveCategory={setActiveCategory} setMenuMode={setMenuMode} activeCategory={activeCategory} />}
+        {activeTab === "Kapcsolat" ? (
+          <ContactView />
+        ) : activeTab === "Rólunk" ? (
+          <AboutView />
+        ) : activeTab === "Étlap" ? (
+          <MenuView menuMode={menuMode} activeCategory={activeCategory} setMenuMode={setMenuMode} />
+        ) : (
+          <LandingView setActiveTab={setActiveTab} setActiveCategory={setActiveCategory} setMenuMode={setMenuMode} activeCategory={activeCategory} />
+        )}
       </main>
 
 
@@ -557,8 +658,9 @@ export default function App() {
           <div>
             <h4 className="font-mono font-black uppercase tracking-widest mb-8 text-sm">Elérhetőség</h4>
             <ul className="space-y-6">
-              <li className="flex gap-4"><MapPin className="w-5 h-5 text-primary" /> <span className="text-sm font-medium">1051 Budapest, Olasz tér 12.</span></li>
-              <li className="flex gap-4"><Phone className="w-5 h-5 text-primary" /> <span className="text-sm font-medium">+36 1 234 5678</span></li>
+              <li className="flex gap-4"><MapPin className="w-5 h-5 text-primary" /> <span className="text-sm font-medium">6500 Baja, Tóth Kálmán tér 5.</span></li>
+              <li className="flex gap-4"><Phone className="w-5 h-5 text-primary" /> <span className="text-sm font-medium">+36 30 755 6846</span></li>
+              <li className="flex gap-4"><Mail className="w-5 h-5 text-primary" /> <span className="text-sm font-medium">info@pinocchiopizza.hu</span></li>
             </ul>
           </div>
         </div>
