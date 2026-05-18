@@ -178,7 +178,7 @@ const LandingView = ({ setActiveTab, setActiveCategory, setMenuMode, activeCateg
     <section className="relative min-h-[85vh] flex items-center pt-20 overflow-hidden">
       <div className="absolute inset-0 z-0 scale-105">
         <img 
-          src="/images/pizzakep.png" 
+          src={`${import.meta.env.BASE_URL}images/pizzakep.png`} 
           alt="Authentic wood-fired pizza" 
           className="w-full h-full object-cover brightness-[0.7] contrast-[1.1]"
         />
